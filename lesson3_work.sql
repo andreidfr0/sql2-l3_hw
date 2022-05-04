@@ -8,3 +8,14 @@
 --   3. Удалить одного сотрудника, у которого максимальная зарплата.
 --   4. Посчитать количество сотрудников во всех отделах.
 --   5. Найти количество сотрудников в отделах и посмотреть, сколько всего денег получает отдел.
+
+use geodata;
+
+select
+ o.title AS country,
+ c.title AS city,
+ r.title AS region
+from _cities
+	left join _countries ON c.country_id = o.country_id
+    left join _regions ON c.region_id = r.region_id
+limit 100;
