@@ -45,6 +45,17 @@ where region_id =
             )
 -- into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/out.log'
 ;
+-- или так
+select 	*
+from _cities
+where exists
+		(
+		select id
+		from _regions
+		where id = _cities.region_id and title like 'москов%'
+            )
+-- into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/out3.log'           
+;
 
 -- 2.1
 
