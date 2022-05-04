@@ -94,3 +94,36 @@ where emp_no = (
 ;
 
 -- 2.4 Посчитать количество сотрудников во всех отделах.
+SELECT 
+  COUNT(DISTINCT EMP_NO)
+FROM DEPT_EMP;
+-- или 
+select count(*) from employees;
+
+-- количество струдников в каждом отделе
+select 
+	count(emp.emp_no) as counts,
+    dp.dept_name as department_name
+from employees emp
+	left join dept_emp dept_ on emp.emp_no = dept_.emp_no 
+    right join departments dp on dp.dept_no = dept_.dept_no
+group by department_name
+order by counts desc
+-- -- сотрудник может работать в нескольких отделах
+; 
+
+-- 2.5 Найти количество сотрудников в отделах и 
+--	   посмотреть, сколько всего денег получает отдел.
+select 
+	sum(sl.salary) as sum_salary,
+    dp.dept_name as department_name,
+    -- dp.dept_no as department_num,
+    count(emp.emp_no) as count_employees
+from salaries sl
+	left join employees emp on sl.emp_no = emp.emp_no
+	inner join dept_emp dept_ on emp.emp_no = dept_.emp_no 
+    right join departments dp on dp.dept_no = dept_.dept_no
+group by department_name
+order by count_employees desc
+-- -- сотрудник может работать в нескольких отделах
+;
