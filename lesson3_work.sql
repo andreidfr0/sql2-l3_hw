@@ -9,8 +9,9 @@
 --   4. Посчитать количество сотрудников во всех отделах.
 --   5. Найти количество сотрудников в отделах и посмотреть, сколько всего денег получает отдел.
 
-use geodata;
--- 1.1
+use geodata
+;
+-- 1.1 Сделать запрос, в котором мы выберем все данные о городе – регион, страна.
 select
  ci.id AS 'ID',
  ci.country_id AS 'country ID',
@@ -24,7 +25,7 @@ from _cities ci
     left join _regions re ON ci.region_id = re.id
 ;
 
--- 1.2
+-- 1.2 Выбрать все города из Московской области.
 select
  ci.*,
  re.title AS region
@@ -57,7 +58,10 @@ where exists
 -- into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/out3.log'           
 ;
 
--- 2.1
+use employees
+;
+-- 2.1 Выбрать среднюю зарплату по отделам.
+
 select 
 	avg(sl.salary) as average_salary,
     dp.dept_name as department_name
@@ -69,7 +73,7 @@ group by department_name
 order by average_salary desc
 ;
 
--- 2.2
+-- 2.2 Выбрать максимальную зарплату у сотрудника.
 select 
 	max(sl.salary) as max_salary,
     CONCAT(COALESCE(emp.FIRST_NAME,''),' ',COALESCE(emp.LAST_NAME,'')) as EMPLOYEE_full_NAME
@@ -79,11 +83,14 @@ group by EMPLOYEE_full_NAME
 order by max_salary desc
 ;
 
--- 2.3
+-- 2.3 Удалить одного сотрудника, у которого максимальная зарплата.
 delete from employees
 where emp_no = (
 	select emp_no
 	from salaries
     order by salary desc
     limit 1
-    );
+    )
+;
+
+-- 2.4 Посчитать количество сотрудников во всех отделах.
