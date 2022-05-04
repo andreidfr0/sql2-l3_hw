@@ -29,14 +29,22 @@ select
  ci.*,
  re.title AS region
 from _cities ci
-    left join _regions re ON ci.region_id = re.id
+    left join _regions re
+        ON ci.region_id = re.id
 where
-	re.title like 'московская%'
+	re.title like 'московская%'   
 ;
--- order by ci.title asc
--- limit 10
+-- или так
+select 	*
+from _cities
+where region_id =
+		(
+		select id
+		from _regions
+		where title like 'московская%'
+            )
+-- into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/out.log'
 ;
--- select 
--- count(*) as 'all_rows'
--- from _cities
-;
+
+-- 2.1
+
