@@ -58,4 +58,32 @@ where exists
 ;
 
 -- 2.1
+select 
+	avg(sl.salary) as average_salary,
+    dp.dept_name as department_name
+from salaries sl
+	left join employees emp on sl.emp_no = emp.emp_no
+	inner join dept_emp dept_ on emp.emp_no = dept_.emp_no 
+    right join departments dp on dp.dept_no = dept_.dept_no
+group by department_name
+order by average_salary desc
+;
 
+-- 2.2
+select 
+	max(sl.salary) as max_salary,
+    CONCAT(COALESCE(emp.FIRST_NAME,''),' ',COALESCE(emp.LAST_NAME,'')) as EMPLOYEE_full_NAME
+from salaries sl
+	left join employees emp on emp.emp_no = sl.emp_no 
+group by EMPLOYEE_full_NAME
+order by max_salary desc
+;
+
+-- 2.3
+delete from employees
+where emp_no = (
+	select emp_no
+	from salaries
+    order by salary desc
+    limit 1
+    );
