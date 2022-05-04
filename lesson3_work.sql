@@ -12,10 +12,14 @@
 use geodata;
 
 select
- o.title AS country,
- c.title AS city,
- r.title AS region
-from _cities
-	left join _countries ON c.country_id = o.country_id
-    left join _regions ON c.region_id = r.region_id
-limit 100;
+ ci.id AS 'ID',
+ ci.country_id AS 'country ID',
+ ci.region_id AS 'region ID',
+ ci.important AS ' is capital',
+ ci.title AS city,
+ co.title AS country,
+ re.title AS region
+from _cities ci
+	left join _countries co ON ci.country_id = co.id
+    left join _regions re ON ci.region_id = re.id
+limit 10000;
